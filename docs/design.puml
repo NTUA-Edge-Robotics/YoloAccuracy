@@ -1,17 +1,18 @@
-@startuml
+@startuml design
 
 skinparam Monochrome true
 
 /'
 Steps :
 
-1. Load a raw or lossless image
+1. Load a raw or lossless image (TIFF or PNG)
 2. Resize the image (if necessary) and keep the aspect ratio
 3. Save the image as JPEG XL (JXL) according to the quality factor and the chroma subsampling
-4. Detect the objects in the saved JXL with YOLO
-5. Mesure the speed of the detection in seconds
-6. Get the predicted classes, the confidence (%) and the actual classes
-7. Save the results in a CSV file
+4. Convert the JXL to a lossless format (PNG)
+5. Detect the objects in the saved JXL with YOLO
+6. Mesure the speed of the detection in seconds
+7. Get the predicted classes, the confidence (%) and the actual classes
+8. Save the results in a CSV file
 
 Additional features : log everything in case it goes wrong
 
@@ -21,19 +22,9 @@ Things that should be defined :
 
 What needs to be done :
 
-Load JXL from file
 Compare the results to the actual classes
 Make a good design and integrate everything
 '/
-
-class ImageManipulator {
-    
-}
-
-class Benchmark {
-    __
-    + Benchmark(writer:csv.DictWriter)
-}
 
 class csv.DictWriter {
     __
