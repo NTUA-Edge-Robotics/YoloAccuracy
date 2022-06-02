@@ -24,3 +24,13 @@ The `generate_primary_data.py` script follows these steps :
 - Get the actual classes in an image
 - Log and handle errors
 - Generate the secondary data
+
+## Notes
+
+Find a dataset with one person in each picture. Add some other pictures where there are nobody. Add some pictures taken with the astra camera.
+
+Quality : From 1 to 100 (steps of 10)
+Height : From 60 to 960 (steps of 100)
+Chroma subsampling : -1, 0, 1, 2, 4 and 8
+
+Cluster the results in 3 different conditions (e.g. K means clustering)
