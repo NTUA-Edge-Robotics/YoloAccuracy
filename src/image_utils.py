@@ -17,7 +17,7 @@ def resize_image_keep_aspect_ratio(input:str, output:str, height:int):
     image = cv2.imread(input)
     ratio = height / image.shape[0]
 
-    if height < 1 or image > image.shape[0]:
+    if height < 1 or height > image.shape[0]:
         raise ValueError("height must be bigger than 0 and smaller than the input height")
 
     image = cv2.resize(image, (0, 0), fx = ratio, fy = ratio)
