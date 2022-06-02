@@ -17,6 +17,7 @@ The `generate_primary_data.py` script follows these steps :
 
 - The images we want to use
 - The weights and the config files to use with YOLO (e.g. yolo and yolo-tiny)
+- Do we want to run the inference multiple times to get an average speed?
 
 ## What needs to be done
 
