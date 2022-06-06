@@ -1,4 +1,3 @@
-from multiprocessing.sharedctypes import Value
 import subprocess
 
 def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -1):
@@ -9,7 +8,7 @@ def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -
     Args:
         intput (str): The path to the image file to convert. The allowed images types are the one supported by cjxl (i.e. PNG, APNG, GIF, JPEG, EXR, PPM, PFM, or PGX)
         output (str): The path to the JXL file to write. Must include the .jxl extension
-        quality (int): The quality factor of the JXL encoding from 0 to 100
+        quality (int): The quality factor of the JXL encoding from -inf to 100
         resampling (int, optional): Subsample all color channels by this factor. Allowed values are -1, 0, 1, 2, 4 and 8. Defaults to -1 (disabled).
     
     Raises:
@@ -25,8 +24,8 @@ def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -
     TODO:
         Log all messages returned by cjxl
     """
-    if quality < 0 or quality > 100:
-        raise ValueError("quality must be between 0 and 100")
+    if quality > 100:
+        raise ValueError("quality must be -inf to 100")
     
     if resampling not in [-1, 0, 1, 2, 4, 8]:
         raise ValueError("resampling must be between -1, 0, 1, 2, 4 or 8")

@@ -1,86 +1,58 @@
 import os
-import pathlib
-from timeit import default_timer as timer
+from pathlib import Path
 import pandas
+import argparse
 
-from jxl_utils import convert_image_to_jxl, convert_jxl_to_png
-from yolo_utils import load_model, load_image
-from image_utils import resize_image_keep_aspect_ratio
+from yolo_utils import load_model
+from process_image import process_image
+from range_action import RangeAction
 
-# Parameters
-configPath = "ressources" + os.sep + "yolov3.cfg"
-weightsPath = "ressources" + os.sep + "yolov3.weights"
-metaPath = "ressources" + os.sep + "coco.data"
+# Parse the arguments of the command line
+parser = argparse.ArgumentParser(description="Benchmark YOLO with JPEG XL images")
 
-images = [
-    "images" + os.sep + "test.png",
-    "images" + os.sep + "cat.jpg"
-] # TODO Replace with a directory
+parser.add_argument("-i", "-images", required=True, help="The directory containing the images", dest="images")
+parser.add_argument("-q", "-qualities", required=True, nargs=3, type=int, action=RangeAction, help="The JPEG XL qualities to use [min] [max] [step]. max is included in the range.", dest="qualities")
+parser.add_argument("-he", "-heights", required=True, nargs=3, type=int, action=RangeAction, help="The heights of the images to use [min] [max] [step]. max is included in the range.", dest="heights")
+parser.add_argument("-r", "-resampling", required=True, nargs="+", type=int, help="The list of resampling values to use. Valid values are : -1, 0, 1, 2, 4, 8", dest="resampling_factors")
+parser.add_argument("-t", "-temp", required=True, help="The directory to save the temporary files", dest="temp")
+parser.add_argument("-j", "-json", required=True, help="Path to save the JSON results", dest="jsonPath")
+parser.add_argument("-c", "-config", required=True, help="Path to the YOLO config files", dest="configPath")
+parser.add_argument("-w", "-weights", required=True, help="Path to the YOLO weights", dest="weightsPath")
+parser.add_argument("-m", "-meta", required=True, help="Path to the coco.data file", dest="metaPath")
 
-quality = 30 # TODO
-height = 500 # TODO
-temp_jxl = "images" + os.sep + "temp.jxl"
-temp_png = "images" + os.sep + "temp.png"
-json_results = "ressources/results.json"
+args = parser.parse_args()
+
+print(args)
+
+# Create the temp directory
+os.makedirs(args.temp, exist_ok = True)
+
+temp_jxl = args.temp + os.sep + "temp.jxl"
+temp_png = args.temp + os.sep + "temp.png"
 
 # Load the YOLO model
-model = load_model(configPath, weightsPath, metaPath)
+model = load_model(args.configPath, args.weightsPath, args.metaPath)
 
 # Prepare the results data frame
 frame = pandas.DataFrame()
 
-for image in images:
-    path = pathlib.Path(image)
-    image_name = path.name
-    extension = path.suffix
-    temp_resized = "images" + os.sep + "temp" + extension
+paths = Path(args.images).rglob("*")
 
-    # Resize the image
-    resize_image_keep_aspect_ratio(image, temp_resized, height)
+for path in paths:
+    # Skip directories
+    if not path.is_file():
+        continue
+    
+    for height in args.heights:
+        for quality in args.qualities:
+            for resampling in args.resampling_factors:
+                temp_resized = args.temp + os.sep + "temp" + path.suffix
 
-    # Convert the image to JXL
-    convert_image_to_jxl(temp_resized, temp_jxl, quality)
+                results = process_image(path, height, quality, resampling, model, temp_resized, temp_jxl, temp_png)
 
-    # Save the image as a PNG
-    convert_jxl_to_png(temp_jxl, temp_png)
+                # Add the results to the data frame
+                temp_frame = pandas.DataFrame(results)
+                frame = pandas.concat([frame, temp_frame], ignore_index=True)
 
-    # Load the PNG as a darknet image
-    darknet_image = load_image(temp_png)
-
-    # Use YOLO to do the inference and mesure its duration
-    start = timer()
-    results = model.detect(darknet_image)
-    end = timer()
-
-    inference_time = end - start
-
-    # Format results
-    predicted_classes = []
-    confidences = []
-
-    for predicted_class, confidence, bounds in results:
-        predicted_classes.append(predicted_class)
-        confidences.append(confidence)
-
-    # TODO Get the actual classes in the image
-    actual_classes = ["person", "car", "dog"]
-
-    # Build the results
-    results = {
-        "image": image_name,
-        "height": height,
-        "quality": quality,
-        "resampling": -1,
-        "predicted_classes": [predicted_classes],
-        "confidence": [confidences],
-        "actual_classes": [actual_classes],
-        "inference_time": inference_time
-    }
-
-    temp_frame = pandas.DataFrame(results)
-
-    # Add the results to the data frame
-    frame = pandas.concat([frame, temp_frame], ignore_index=True)
-
-    # Save the results to JSON
-    frame.to_json(json_results)
+                # Save the results to JSON
+                frame.to_json(args.jsonPath)
