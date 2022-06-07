@@ -26,7 +26,11 @@ The script is meant to work with the [People Overhead dataset](https://www.kaggl
 
 ## Data Visualization
 
-TODO
+Wanted graphics :
+
+- Accuracy according to quality, height and color subsampling (4 graphs)
+- Confidence according to quality, height and color subsampling (?)
+- Inference time according to quality, height and color subsampling
 
 ## What needs to be done
 
