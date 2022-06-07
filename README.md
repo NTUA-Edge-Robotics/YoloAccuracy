@@ -1,36 +1,39 @@
 # YoloBenchmarker
 
-## Primary data
+The project aims to benchmark the performance of [YOLO](https://pjreddie.com/darknet/yolo/) using [JPEG XL](https://jpeg.org/jpegxl/).
 
-The `generate_primary_data.py` script follows these steps :
+## Installation
 
-1. Load a raw or lossless image (e.g. TIFF or PNG)
+1. Install [libjxl](https://github.com/libjxl/libjxl/releases) on your computer. `cjxl` and `djxl` needs to be available on your path.
+1. Install the dependencies with `pip install -r requirements.txt`
+
+## Primary Data Generation
+
+The API of the script can be found using `generate_primary_data.py -h`. The script follows these steps :
+
+1. Load a raw or lossless image (e.g. PNG)
 1. Resize the image (if necessary) and keep the aspect ratio
 1. Save the image as JPEG XL (JXL) according to the quality factor and the chroma subsampling
 1. Convert the JXL to a lossless format (PNG)
 1. Detect the objects in the saved JXL with YOLO
-1. Mesure the speed of the detection in seconds
+1. Mesure the speed of the inference in seconds
 1. Get the predicted classes, the confidence (%) and the actual classes
 1. Save the results in a JSON file
 
-## Things that needs to be defined
+### Notes
 
-- The images we want to use
-- The weights and the config files to use with YOLO (e.g. yolo and yolo-tiny)
-- Do we want to run the inference multiple times to get an average speed?
+The script is meant to work with the [People Overhead dataset](https://www.kaggle.com/datasets/hifrom/people-overhead). To use another dataset, `dataset_utils.py` should be updated to retrieve the proper actual classes.
+
+## Data Visualization
+
+TODO
 
 ## What needs to be done
 
-- Get the actual classes in an image
-- Log and handle errors
 - Generate the secondary data
+- Visualize the data
 
-## Notes
+## What could be improved
 
-Find a dataset with one person in each picture. Add some other pictures where there are nobody. Add some pictures taken with the astra camera.
-
-Quality : From -100 to 100 (steps of 10)
-Height : From 60 to 960 (steps of 100)
-Chroma subsampling : -1, 0, 1, 2, 4 and 8
-
-Cluster the results in 3 different conditions (e.g. K means clustering)
+- Log and handle errors
+- Automated tests
