@@ -22,8 +22,6 @@ parser.add_argument("-m", "-meta", required=True, help="Path to the coco.data fi
 
 args = parser.parse_args()
 
-print(args)
-
 # Create the temp directory
 os.makedirs(args.temp, exist_ok = True)
 
