@@ -26,16 +26,15 @@ The script is meant to work with the [People Overhead dataset](https://www.kaggl
 
 ## Data Visualization
 
-Wanted graphics :
+The following scripts will produce a graphic that is shown to the user.
 
-- Accuracy according to quality, height and color subsampling (4 graphs)
-- Confidence according to quality, height and color subsampling (?)
-- Inference time according to quality, height and color subsampling
+### Visualize Accuracy
 
-## What needs to be done
+The API of the script can be found using `visualize_accuracy.py -h`.
 
-- Generate the secondary data
-- Visualize the data
+### Visualize Inference Time
+
+The API of the script can be found using `visualize_inference_time.py -h`.
 
 ## What could be improved
 
