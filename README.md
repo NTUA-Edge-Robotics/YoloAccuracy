@@ -1,6 +1,6 @@
 # YoloBenchmarker
 
-The project aims to benchmark the performance of [YOLO](https://pjreddie.com/darknet/yolo/) using [JPEG XL](https://jpeg.org/jpegxl/).
+The project aims to benchmark the performance of [YOLOv5](https://github.com/ultralytics/yolov5) using [libjxl](https://github.com/libjxl/libjxl).
 
 ## Installation
 
@@ -13,11 +13,10 @@ The API of the script can be found using `python generate_primary_data.py -h`. T
 
 1. Load a raw or lossless image (e.g. PNG)
 1. Resize the image (if necessary) and keep the aspect ratio
-1. Save the image as JPEG XL (JXL) according to the quality factor and the chroma subsampling
+1. Save the image as JPEG XL (JXL) according to a quality factor
 1. Convert the JXL to a lossless format (PNG)
-1. Detect the objects in the saved JXL with YOLO
-1. Mesure the speed of the inference in seconds
-1. Get the predicted classes, the confidence (%) and the actual classes
+1. Detect the objects in the saved JXL with YOLOv5
+1. Get the inference speed, the predicted classes, the confidence (%) and the actual classes
 1. Save the results in a JSON file
 
 ### Notes
