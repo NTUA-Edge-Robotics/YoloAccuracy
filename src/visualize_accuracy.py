@@ -20,7 +20,7 @@ compute_accuracy_as_binary_classification(frame)
 frame = frame.groupby(["quality", "height"], as_index = False)["accuracy"].mean()
 
 # Prepare graph
-pyplot.figure()
+pyplot.figure(figsize=(3.4, 4))
 axes = pyplot.axes(projection="3d")
 
 axes.bar(frame["quality"], frame["accuracy"], zs=frame["height"], zdir="y", width = 5)
@@ -37,5 +37,4 @@ axes.set_zlabel("Average Accuracy")
 axes.view_init(23, -139)
 
 pyplot.tick_params(axis="both", which="both", labelsize=6)
-pyplot.gcf().set_size_inches(3.4, 4)
 pyplot.savefig(args.figure, bbox_inches="tight")
