@@ -12,7 +12,7 @@ def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -
         resampling (int, optional): Subsample all color channels by this factor. Allowed values are -1, 0, 1, 2, 4 and 8. Defaults to -1 (disabled).
     
     Raises:
-        ValueError: If quality is not between 0 and 100
+        ValueError: If quality is higher than 100
         ValueError: If resampling is not -1, 0, 1, 2, 4 or 8
         CalledProcessError : If the cjxl process returns a non-zero exit code (e.g. file not found, input is not a valid type, etc.)
 
@@ -25,7 +25,7 @@ def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -
         Log all messages returned by cjxl
     """
     if quality > 100:
-        raise ValueError("quality must be -inf to 100")
+        raise ValueError("quality must be -Inf to 100")
     
     if resampling not in [-1, 0, 1, 2, 4, 8]:
         raise ValueError("resampling must be between -1, 0, 1, 2, 4 or 8")

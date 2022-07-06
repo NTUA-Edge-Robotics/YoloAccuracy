@@ -16,25 +16,16 @@ The API of the script can be found using `python generate_primary_data.py -h`. T
 1. Save the image as JPEG XL (JXL) according to a quality factor
 1. Convert the JXL to a lossless format (PNG)
 1. Detect the objects in the saved JXL with YOLOv5
-1. Mesure the speed of the inference in seconds
-1. Get the predicted classes, the confidence (%) and the actual classes
+1. Get the inference speed, the predicted classes, the confidence (%) and the actual classes
 1. Save the results in a JSON file
 
 ### Notes
 
 The script is meant to work with the [People Overhead dataset](https://www.kaggle.com/datasets/hifrom/people-overhead). To use another dataset, `dataset_utils.py` should be updated to retrieve the proper actual classes.
 
-## Data Visualization
+## Accuracy Visualization
 
-The following scripts will produce a graphic that is shown to the user.
-
-### Visualize Accuracy
-
-The API of the script can be found using `python visualize_accuracy.py -h`.
-
-### Visualize Inference Time
-
-The API of the script can be found using `python visualize_inference_time.py -h`.
+The following script will produce a graphic of the predictions accuracy according to the height and the quality factor. The API of the script can be found using `python visualize_accuracy.py -h`.
 
 ## What could be improved
 
