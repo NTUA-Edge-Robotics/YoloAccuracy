@@ -9,7 +9,7 @@ The project aims to benchmark the performance of [YOLOv5](https://github.com/ult
 
 ## Primary Data Generation
 
-The API of the script can be found using `python src/generate_primary_data.py -h`. The script follows these steps :
+The API of the script can be found using `python src/generate_primary_data.py -h`. The script follows these steps&nbsp;:
 
 1. Load a raw or lossless image (e.g. PNG)
 1. Resize the image (if necessary) and keep the aspect ratio
