@@ -9,7 +9,7 @@ The project aims to benchmark the performance of [YOLO](https://pjreddie.com/dar
 
 ## Primary Data Generation
 
-The API of the script can be found using `generate_primary_data.py -h`. The script follows these steps :
+The API of the script can be found using `python generate_primary_data.py -h`. The script follows these steps :
 
 1. Load a raw or lossless image (e.g. PNG)
 1. Resize the image (if necessary) and keep the aspect ratio
@@ -24,17 +24,9 @@ The API of the script can be found using `generate_primary_data.py -h`. The scri
 
 The script is meant to work with the [People Overhead dataset](https://www.kaggle.com/datasets/hifrom/people-overhead). To use another dataset, `dataset_utils.py` should be updated to retrieve the proper actual classes.
 
-## Data Visualization
+## Accuracy Visualization
 
-The following scripts will produce a graphic that is shown to the user.
-
-### Visualize Accuracy
-
-The API of the script can be found using `visualize_accuracy.py -h`.
-
-### Visualize Inference Time
-
-The API of the script can be found using `visualize_inference_time.py -h`.
+The following script will produce a graphic of the predictions accuracy according to the height and the quality factor. The API of the script can be found using `python visualize_accuracy.py -h`.
 
 ## What could be improved
 

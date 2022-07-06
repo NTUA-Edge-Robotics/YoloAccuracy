@@ -1,6 +1,7 @@
 images/
-ressources/
+results/
 temp/
+*.pt
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,macos,windows,linux,visualstudiocode,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,macos,windows,linux,visualstudiocode,intellij
