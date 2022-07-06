@@ -5,6 +5,20 @@ from jxl_utils import convert_image_to_jxl, convert_jxl_to_png
 from image_utils import resize_image_keep_aspect_ratio
 
 def process_image(path:pathlib.Path, height:int, quality:int, model, temp_resized:str, temp_jxl:str, temp_png:str):
+    """Converts one image to JPEG XL, runs the inference with YOLOv5 and returns the results.
+
+    Args:
+        path (pathlib.Path): The path to the image to run the inference
+        height (int): The height of the image in pixels. Aspect ratio is kept
+        quality (int): The quality factor of the image between -Inf to 100
+        model (_type_): The YOLOv5 model to use
+        temp_resized (str): The name of the temporary image that will be resized
+        temp_jxl (str): The name of the temporary image that will be converted to JXL
+        temp_png (str): The name of the temporary JXL image that will be converted to PNG and used to run the inference
+
+    Returns:
+        dict[str, any]: The name of the image, its height, its quality factor, the predicted classes, the confidence of the predictions, the actual classes and the inference time
+    """
     # Resize the image
     resize_image_keep_aspect_ratio(str(path), temp_resized, height)
 
