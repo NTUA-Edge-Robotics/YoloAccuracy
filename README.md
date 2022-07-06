@@ -9,7 +9,7 @@ The project aims to benchmark the performance of [YOLOv5](https://github.com/ult
 
 ## Primary Data Generation
 
-The API of the script can be found using `python generate_primary_data.py -h`. The script follows these steps :
+The API of the script can be found using `python src/generate_primary_data.py -h`. The script follows these steps :
 
 1. Load a raw or lossless image (e.g. PNG)
 1. Resize the image (if necessary) and keep the aspect ratio
@@ -25,7 +25,7 @@ The script is meant to work with the [People Overhead dataset](https://www.kaggl
 
 ## Accuracy Visualization
 
-The following script will produce a graphic of the predictions accuracy according to the height and the quality factor. The API of the script can be found using `python visualize_accuracy.py -h`.
+The following script will produce a graphic of the predictions accuracy according to the height and the quality factor. The API of the script can be found using `python src/visualize_accuracy.py -h`.
 
 ## What could be improved
 
