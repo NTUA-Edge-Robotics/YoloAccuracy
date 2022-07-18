@@ -1,6 +1,6 @@
 import subprocess
 
-def convert_image_to_jxl(intput:str, output:str, quality:int, effort:str, resampling:int = -1):
+def convert_image_to_jxl(input:str, output:str, quality:int, effort:str, resampling:int = -1):
     """Converts an image file to a JXL using cjxl.
 
     cjxl must be installed and be available in the path.
@@ -32,9 +32,9 @@ def convert_image_to_jxl(intput:str, output:str, quality:int, effort:str, resamp
         raise ValueError("resampling must be between -1, 0, 1, 2, 4 or 8")
 
     if resampling == -1:
-        process = subprocess.run(["cjxl", intput, "-q", str(quality), "-e", effort, output], capture_output=True)
+        process = subprocess.run(["cjxl", input, "-q", str(quality), "-e", effort, output], capture_output=True)
     else:
-        process = subprocess.run(["cjxl", intput, "-q", str(quality), "-e", effort, f"--resampling={resampling}", output], capture_output=True)
+        process = subprocess.run(["cjxl", input, "-q", str(quality), "-e", effort, f"--resampling={resampling}", output], capture_output=True)
 
     process.check_returncode()
 
