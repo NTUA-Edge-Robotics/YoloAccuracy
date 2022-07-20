@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description="Benchmark YOLO with JPEG XL images
 parser.add_argument("-i", "-images", required=True, help="The directory containing the images", dest="images")
 parser.add_argument("-q", "-qualities", required=True, nargs=3, type=int, action=RangeAction, help="The JPEG XL qualities to use [min] [max] [step]. max is included in the range.", dest="qualities")
 parser.add_argument("-he", "-heights", required=True, nargs=3, type=int, action=RangeAction, help="The heights of the images to use [min] [max] [step]. max is included in the range.", dest="heights")
+parser.add_argument("-e", "-efforts", required=True, nargs="+", help="A list of JXL efforts. Must use the name of the effort (e.g. lightning, thunder, etc.)", dest="efforts")
 parser.add_argument("-t", "-temp", required=True, help="The directory to save the temporary files", dest="temp")
 parser.add_argument("-j", "-json", required=True, help="Path to save the JSON results", dest="jsonPath")
 parser.add_argument("-m", "-model", required=True, help="The YOLOv5 model to use", dest="model")
@@ -40,13 +41,14 @@ for path in paths:
     
     for height in args.heights:
         for quality in args.qualities:
-            temp_resized = args.temp + os.sep + "temp" + path.suffix
+            for effort in args.efforts:
+                temp_resized = args.temp + os.sep + "temp" + path.suffix
 
-            results = process_image(path, height, quality, model, temp_resized, temp_jxl, temp_png)
+                results = process_image(path, height, quality, effort, model, temp_resized, temp_jxl, temp_png)
 
-            # Add the results to the data frame
-            temp_frame = pandas.DataFrame(results)
-            frame = pandas.concat([frame, temp_frame], ignore_index=True)
+                # Add the results to the data frame
+                temp_frame = pandas.DataFrame(results)
+                frame = pandas.concat([frame, temp_frame], ignore_index=True)
 
-            # Save the results to JSON
-            frame.to_json(args.jsonPath)
+                # Save the results to JSON
+                frame.to_json(args.jsonPath)

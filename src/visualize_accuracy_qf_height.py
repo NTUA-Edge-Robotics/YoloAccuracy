@@ -5,7 +5,7 @@ from mpl_toolkits import mplot3d
 
 from compute_accuracy_as_binary_classification import compute_accuracy_as_binary_classification
 
-parser = argparse.ArgumentParser(description="Visualize the average accuracy of YOLO predictions according to height and quality factor.")
+parser = argparse.ArgumentParser(description="Visualize the average accuracy of YOLO predictions according to the quality factor and the height.")
 
 parser.add_argument("json", help="Path to the JSON results")
 parser.add_argument("figure", help="Path and filename of the resulting figure")
@@ -17,6 +17,7 @@ frame = pandas.read_json(args.json)
 # Convert predicted and actual classes to a binary classification
 compute_accuracy_as_binary_classification(frame)
 
+# Group by quality and height
 frame = frame.groupby(["quality", "height"], as_index = False)["accuracy"].mean()
 
 # Prepare graph

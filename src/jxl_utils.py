@@ -1,6 +1,6 @@
 import subprocess
 
-def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -1):
+def convert_image_to_jxl(input:str, output:str, quality:int, effort:str, resampling:int = -1):
     """Converts an image file to a JXL using cjxl.
 
     cjxl must be installed and be available in the path.
@@ -9,6 +9,7 @@ def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -
         intput (str): The path to the image file to convert. The allowed images types are the one supported by cjxl (i.e. PNG, APNG, GIF, JPEG, EXR, PPM, PFM, or PGX)
         output (str): The path to the JXL file to write. Must include the .jxl extension
         quality (int): The quality factor of the JXL encoding from -inf to 100
+        effort (str): The name of the effort (e.g. lightning, thunder, etc.) for the JXL encoding
         resampling (int, optional): Subsample all color channels by this factor. Allowed values are -1, 0, 1, 2, 4 and 8. Defaults to -1 (disabled).
     
     Raises:
@@ -17,9 +18,9 @@ def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -
         CalledProcessError : If the cjxl process returns a non-zero exit code (e.g. file not found, input is not a valid type, etc.)
 
     Examples:
-        >>> convert_image_to_jxl("path/to/input.png", "path/to/output.jxl", 75)
+        >>> convert_image_to_jxl("path/to/input.png", "path/to/output.jxl", 75, "squirrel")
 
-        >>> convert_image_to_jxl("path/to/input.png", "path/to/output.jxl", 40, 8)
+        >>> convert_image_to_jxl("path/to/input.png", "path/to/output.jxl", 40, "kitten", resampling=8)
     
     TODO:
         Log all messages returned by cjxl
@@ -31,9 +32,9 @@ def convert_image_to_jxl(intput:str, output:str, quality:int, resampling:int = -
         raise ValueError("resampling must be between -1, 0, 1, 2, 4 or 8")
 
     if resampling == -1:
-        process = subprocess.run(["cjxl", intput, "-q", str(quality), output], capture_output=True)
+        process = subprocess.run(["cjxl", input, "-q", str(quality), "-e", effort, output], capture_output=True)
     else:
-        process = subprocess.run(["cjxl", intput, "-q", str(quality), f"--resampling={resampling}", output], capture_output=True)
+        process = subprocess.run(["cjxl", input, "-q", str(quality), "-e", effort, f"--resampling={resampling}", output], capture_output=True)
 
     process.check_returncode()
 
