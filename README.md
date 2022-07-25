@@ -1,4 +1,4 @@
-# YoloBenchmarker
+# YoloAccuracy
 
 The project aims to benchmark the accuracy of [YOLOv5](https://github.com/ultralytics/yolov5) using [libjxl](https://github.com/libjxl/libjxl).
 
