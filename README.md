@@ -1,6 +1,6 @@
 # YoloBenchmarker
 
-The project aims to benchmark the performance of [YOLOv5](https://github.com/ultralytics/yolov5) using [libjxl](https://github.com/libjxl/libjxl).
+The project aims to benchmark the accuracy of [YOLOv5](https://github.com/ultralytics/yolov5) using [libjxl](https://github.com/libjxl/libjxl).
 
 ## Installation
 
