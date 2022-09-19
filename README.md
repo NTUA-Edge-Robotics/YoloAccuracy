@@ -2,6 +2,8 @@
 
 The project aims to benchmark the accuracy of [YOLOv5](https://github.com/ultralytics/yolov5) using [libjxl](https://github.com/libjxl/libjxl).
 
+[Read, watch or cite our paper](https://github.com/NTUA-Edge-Robotics/.github/blob/main/profile/README.md)
+
 ## Installation
 
 1. Install [libjxl](https://github.com/libjxl/libjxl/releases) on your computer. `cjxl` and `djxl` needs to be available on your path.
